@@ -1,0 +1,30 @@
+---
+title: "SEM in Agriculture"
+author: "Clark"
+date: "3/11/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+Two examples of systems in which SEM (Path analysis) can be used to investigate the strength of indirect effects
+in agricultural systems.
+
+```{r data, echo=FALSE}
+summary(iris)
+
+```
+
+## Plots
+
+Embedded plot section
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
