@@ -8,7 +8,5 @@ The authors on this project have applied path analysis (specfically with the pie
 
 ## Example applications from published works
 
-![Clark et al. 2016](ecology 2016.png)
-
-![Clark et al. 2016](https://github.com/robclark19/pathanalysismethods/ecology 2016.png?raw=true)
+![Clark et al. 2016](https://github.com/robclark19/pathanalysismethods/ecology2016.png?raw=true)
 
