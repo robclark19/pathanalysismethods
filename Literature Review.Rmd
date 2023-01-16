@@ -4,47 +4,100 @@ output:
   html_document:
     css: "Water.css"
 date: "2023-01-16"
+author: "Robert Clark, Emily Rampone, Robert Orpet, & David Crowder"
 ---
+
+```{css, echo=FALSE}
+pre {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 100px;
+}
+```
 
 # Score-counting literature review
 
 These data are a list of publications using path analysis or SEM in applied entomology. These include agricultural systems, forest natural resources, or other integrated pest management projects. 
 
-Search phrases used in Web of Science include "insect*" AND "pest", "“path analysis” OR "structural equation model". See metadata in ![Meta tab](https://github.com/robclark19/pathanalysismethods/blob/main/References/SEM%20SLR.xlsx).
+<blockquote>
+Web of Science search terms included "insect*" AND "pest", "“path analysis” OR "structural equation model", but excluded results for SEM involving scanning electron microscopy.
+
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
+library(kableExtra)
+library(gridExtra)
+
+# Additional packages or installs
+# library(DT)
+# webshot::install_phantomjs()
 
 ```
 
-## Import data
+# Data availability
 
-```{r data, echo = True, results = 'hide'}
+<fieldset>
+[Data is available to our github repository.](https://github.com/robclark19/pathanalysismethods/tree/main/References)
+
+# Upload spreadsheet
+```{r data, echo = T, results = 'hide'}
 
 lit_data <- readxl::read_xlsx("./References/SEM SLR.xlsx", sheet = "Current") %>% 
   as.data.frame() %>% 
-  select(-c(Paper, Journal)) # drop long text columns
+  select(-c(Paper, Journal)) %>% # drop long text columns
+  rename(type = Tag2_Type, system = Tag1_Systems, topic = Tag3_Interaction)
   
 ```
 
-## Manipulate data for a side-by-side comparison
+# Literature summary data
 
-```{r table, echo = True}
+Literature survey data includes authors, dates, then categorizes based on study system, broad research categories, and the types of ecological interactions being evaluated.
 
+```{r table, echo = FALSE}
 
+lit_data %>% 
+  head() %>%
+  kable()
   
 ```
 
 
 ## Score-counting bar chart
 
+Score counting chart
+
 ```{r scores, echo=FALSE}
 
+# count the number of entries across the dataset for each category
+type_counts <- lit_data %>% count(type)
+system_counts <- lit_data %>% count(system)
+topic_counts <- lit_data %>% count(topic)
 
-head(lit_data)
+
+# create the bar plot for type counts
+bar_plot <- function(data, x_var, y_var){
+  ggplot(data, aes(x = x_var, y = y_var)) +
+    geom_bar(stat = "identity") +
+    ylab("Count") +
+    xlab("")
+}
+
+# make three plots
+type_plot <- bar_plot(type_counts, type_counts$type, type_counts$n)
+system_plot <- bar_plot(system_counts, system_counts$system, system_counts$n)
+topic_plot <- bar_plot(topic_counts, topic_counts$topic, topic_counts$n)
+
+# to stitch together multiple ggplot objects
+grid.arrange(type_plot, system_plot, topic_plot, nrow=3)
+
+
+
 
 ```
 

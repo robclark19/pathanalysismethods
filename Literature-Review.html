@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Robert Clark, Emily Rampone, Robert Orpet, &amp; David Crowder" />
 
 <meta name="date" content="2023-01-16" />
 
@@ -351,36 +352,238 @@ display: none;
 
 
 <h1 class="title toc-ignore">Literature Review</h1>
+<h4 class="author">Robert Clark, Emily Rampone, Robert Orpet, &amp;
+David Crowder</h4>
 <h4 class="date">2023-01-16</h4>
 
 </div>
 
 
-<div id="import-data" class="section level2">
-<h2>Import data</h2>
-<pre class="r"><code>library(readxl)
-lit_data &lt;- readxl::read_xlsx(&quot;./References/SEM SLR.xlsx&quot;, sheet = &quot;Current&quot;) %&gt;% 
-  as.data.frame() %&gt;% 
-  select(-c(Paper, Journal)) # drop long text columns
-  
-str(lit_data)</code></pre>
+<style type="text/css">
+pre {
+max-height: 200px;
+overflow-y: auto;
+}
+pre[class] {
+max-height: 100px;
+}
+</style>
+<div id="score-counting-literature-review" class="section level1">
+<h1>Score-counting literature review</h1>
+<p>These data are a list of publications using path analysis or SEM in
+applied entomology. These include agricultural systems, forest natural
+resources, or other integrated pest management projects.</p>
+<blockquote>
+<p>Web of Science search terms included “insect*” AND “pest”, ““path
+analysis” OR “structural equation model”, but excluded results for SEM
+involving scanning electron microscopy.</p>
 </div>
+<div id="data-availability" class="section level1">
+<h1>Data availability</h1>
+<fieldset>
+<p><a href="https://github.com/robclark19/pathanalysismethods/tree/main/References">Data
+is available to our github repository.</a></p>
+</div>
+<div id="upload-spreadsheet" class="section level1">
+<h1>Upload spreadsheet</h1>
+<pre class="r"><code>lit_data &lt;- readxl::read_xlsx(&quot;./References/SEM SLR.xlsx&quot;, sheet = &quot;Current&quot;) %&gt;% 
+  as.data.frame() %&gt;% 
+  select(-c(Paper, Journal)) # drop long text columns</code></pre>
+</div>
+<div id="literature-summary-data" class="section level1">
+<h1>Literature summary data</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+Number
+</th>
+<th style="text-align:left;">
+First_Author
+</th>
+<th style="text-align:left;">
+Last_Author
+</th>
+<th style="text-align:right;">
+Year
+</th>
+<th style="text-align:left;">
+Tag1_Systems
+</th>
+<th style="text-align:left;">
+Tag2_Type
+</th>
+<th style="text-align:left;">
+Tag3_Interaction
+</th>
+<th style="text-align:left;">
+OtherNotes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Martinez-Nunez et al
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:left;">
+Agriculture
+</td>
+<td style="text-align:left;">
+Applied
+</td>
+<td style="text-align:left;">
+Landscape-Insect Interations
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Didham et al
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2009
+</td>
+<td style="text-align:left;">
+Agriculture
+</td>
+<td style="text-align:left;">
+Applied
+</td>
+<td style="text-align:left;">
+Landscape-Insect Interations
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+Raatz et al
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2021
+</td>
+<td style="text-align:left;">
+Agriculture
+</td>
+<td style="text-align:left;">
+Applied
+</td>
+<td style="text-align:left;">
+Landscape-Insect Interations
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Kim and Holt
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:left;">
+Scrubland
+</td>
+<td style="text-align:left;">
+Applied
+</td>
+<td style="text-align:left;">
+Landscape-Insect Interations
+</td>
+<td style="text-align:left;">
+Post Fire
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Lu et al
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2022
+</td>
+<td style="text-align:left;">
+Agriculture
+</td>
+<td style="text-align:left;">
+Applied
+</td>
+<td style="text-align:left;">
+Landscape-Insect Interations
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+Martin and Goebel
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:left;">
+Forest
+</td>
+<td style="text-align:left;">
+Applied
+</td>
+<td style="text-align:left;">
+Plant-Insect Interactions
+</td>
+<td style="text-align:left;">
+Landscape-Plant - Insect Interations
+</td>
+</tr>
+</tbody>
+</table>
 <div id="score-counting-bar-chart" class="section level2">
 <h2>Score-counting bar chart</h2>
-<pre><code>##   Number         First_Author Last_Author Year Tag1_Systems Tag2_Type
-## 1      1 Martinez-Nunez et al        &lt;NA&gt; 2020  Agriculture   Applied
-## 2      2         Didham et al        &lt;NA&gt; 2009  Agriculture   Applied
-## 3      3          Raatz et al        &lt;NA&gt; 2021  Agriculture   Applied
-## 4      4         Kim and Holt        &lt;NA&gt; 2012    Scrubland   Applied
-## 5      5             Lu et al        &lt;NA&gt; 2022  Agriculture   Applied
-## 6      6    Martin and Goebel        &lt;NA&gt; 2012       Forest   Applied
-##               Tag3_Interaction                           OtherNotes
-## 1 Landscape-Insect Interations                                 &lt;NA&gt;
-## 2 Landscape-Insect Interations                                 &lt;NA&gt;
-## 3 Landscape-Insect Interations                                 &lt;NA&gt;
-## 4 Landscape-Insect Interations                            Post Fire
-## 5 Landscape-Insect Interations                                 &lt;NA&gt;
-## 6    Plant-Insect Interactions Landscape-Plant - Insect Interations</code></pre>
+<p>Score counting chart</p>
+</div>
 </div>
 
 
