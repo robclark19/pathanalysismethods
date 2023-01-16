@@ -8,7 +8,7 @@ The authors on this project have applied path analysis (specfically with the pie
 
 # Examples from published works
 
-### Mutualisms mediate ant predatory effects
+### 1. Mutualisms mediate ant predatory effects
 
 Among the authors of this paper, an early application was using path analysis to understand the direct and indirect effects of beneficial, predatory ants in forest food webs.
 
@@ -18,7 +18,7 @@ Quantifying the relative role of carpenter ants might not have been elucidated w
 
 [Read more: Mutualisms mediate ant predatory effects](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/ecy.1571)
 
-### Tri-trophic ecology of insect vectors
+### 2. Tri-trophic ecology of insect vectors
 
 In another context, path analysis helped to quantify the direct and indirect effects of an aphid vector of pea plant pathogens.
 
@@ -32,7 +32,7 @@ Path analysis was useful for showing the effects of non-crop hosts being as stro
 
 [Read more: Tri-trophic ecology of insect vectors](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.2879)
 
-### Restricting aphid movement between root and canopies
+### 3. Restricting aphid movement between root and canopies
 
 Experimental pest control treatments themslevse have unintended consequences, and thse can be examined with path analysis. 
 
