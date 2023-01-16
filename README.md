@@ -14,13 +14,13 @@ Among the authors of this paper, an early application was using path analysis to
 
 ![Clark et al. 2016](https://github.com/robclark19/pathanalysismethods/blob/main/ecology2016.png)
 
-[Link to: Mutualisms mediate ant predatory effects](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/ecy.1571)
-
 Quantifying the relative role of carpenter ants might not have been elucidated without path analyses, which inspired further research into the role of this ant species a beneficial predator of forest caterpillars.
+
+[Read more: Mutualisms mediate ant predatory effects](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/ecy.1571)
 
 ### Tri-trophic ecology of insect vectors
 
-In another context, a similar application of path analysis including teasing apart the direct and indirect effects of an aphid vector of pea plant pathogens.
+In another context, path analysis helped to quantify the direct and indirect effects of an aphid vector of pea plant pathogens.
 
 ![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/ecology2019a.png)
 
@@ -30,8 +30,15 @@ As path models became more complex in this research, it became useful to draw sc
 
 Path analysis was useful for showing the effects of non-crop hosts being as strong (or stronger) than the effects of aphid predators like ladybird beetles.
 
-[Link to: Tri-trophic ecology of insect vectors](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.2879)
+[Read more: Tri-trophic ecology of insect vectors](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.2879)
 
-### Experimental trials of mulch on woolly aphids
+### Restricting aphid movement between root and canopies
 
+Experimental pest control treatments themslevse have unintended consequences, and thse can be examined with path analysis. 
+
+![Orpet et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/plosone2019.png)
+
+Here soil mulching treatments effectively suppressed root-feeding woolly aphids. The application of these treatments slightly increased the root mass of apple trees being protected as well compared to sandy soil conditions.
+
+[Read more: Restricting aphid movement between root and canopies](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0216424)
 
