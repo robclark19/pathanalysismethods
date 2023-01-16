@@ -22,7 +22,7 @@ Quantifying the relative role of carpenter ants might not have been elucidated w
 
 In another context, path analysis helped to quantify the direct and indirect effects of an aphid vector of pea plant pathogens.
 
-![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/ecology2019a.png)
+![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/images/ecology2019a.png)
 
 As path models became more complex in this research, it became useful to draw schematics of interaction networks. Interaction network diagrams map out the expected direct and indirection interactions when many potential outcomes were possible. The diagrams informed the starting point for path analysis formally.
 
