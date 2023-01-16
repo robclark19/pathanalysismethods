@@ -12,7 +12,7 @@ The authors on this project have applied path analysis (specfically with the pie
 
 Among the authors of this paper, an early application was using path analysis to understand the direct and indirect effects of beneficial, predatory ants in forest food webs.
 
-![Clark et al. 2016](https://github.com/robclark19/pathanalysismethods/blob/main/ecology2016.png)
+![Clark et al. 2016](https://github.com/robclark19/pathanalysismethods/blob/main/Images/ecology2016.png)
 
 Quantifying the relative role of carpenter ants might not have been elucidated without path analyses, which inspired further research into the role of this ant species a beneficial predator of forest caterpillars.
 
@@ -22,11 +22,11 @@ Quantifying the relative role of carpenter ants might not have been elucidated w
 
 In another context, path analysis helped to quantify the direct and indirect effects of an aphid vector of pea plant pathogens.
 
-![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/images/ecology2019a.png)
+![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/Images/ecology2019a.png)
 
 As path models became more complex in this research, it became useful to draw schematics of interaction networks. Interaction network diagrams map out the expected direct and indirection interactions when many potential outcomes were possible. The diagrams informed the starting point for path analysis formally.
 
-![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/ecology2019b.png)
+![Clark et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/Images/ecology2019b.png)
 
 Path analysis was useful for showing the effects of non-crop hosts being as strong (or stronger) than the effects of aphid predators like ladybird beetles.
 
@@ -34,9 +34,9 @@ Path analysis was useful for showing the effects of non-crop hosts being as stro
 
 ### 3. Restricting aphid movement between root and canopies
 
-Experimental pest control treatments themslevse have unintended consequences, and thse can be examined with path analysis. 
+Experimental pest control treatments themslevse have unintended consequences, and these can be examined with path analysis. 
 
-![Orpet et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/plosone2019.png)
+![Orpet et al. 2019](https://github.com/robclark19/pathanalysismethods/blob/main/Images/plosone2019.png)
 
 Here soil mulching treatments effectively suppressed root-feeding woolly aphids. The application of these treatments slightly increased the root mass of apple trees being protected as well compared to sandy soil conditions.
 
