@@ -1,0 +1,50 @@
+---
+title: "Literature Review"
+output: 
+  html_document:
+    css: "Water.css"
+date: "2023-01-16"
+---
+
+# Score-counting literature review
+
+These data are a list of publications using path analysis or SEM in applied entomology. These include agricultural systems, forest natural resources, or other integrated pest management projects. 
+
+Search phrases used in Web of Science include "insect*" AND "pest", "“path analysis” OR "structural equation model". See metadata in ![Meta tab](https://github.com/robclark19/pathanalysismethods/blob/main/References/SEM%20SLR.xlsx).
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+
+```
+
+## Import data
+
+```{r data, echo = True, results = 'hide'}
+
+lit_data <- readxl::read_xlsx("./References/SEM SLR.xlsx", sheet = "Current") %>% 
+  as.data.frame() %>% 
+  select(-c(Paper, Journal)) # drop long text columns
+  
+```
+
+## Manipulate data for a side-by-side comparison
+
+```{r table, echo = True}
+
+
+  
+```
+
+
+## Score-counting bar chart
+
+```{r scores, echo=FALSE}
+
+
+head(lit_data)
+
+```
+
