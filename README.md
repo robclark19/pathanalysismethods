@@ -1,6 +1,6 @@
 # Using Path Analysis in IPM and Biocontrol Research
 
-Github repository associated with a manuscript on path analysis (structural equation modeling) for using path analyses in integrated pest management or biocontrol research. Target audience for this project are scientists working in applied entomology evaluating field trails, greenhouse experiments, or other surveys. The ideal end-user has already collected data and suspects there are strong direct and indirect effects. Direct effects would be something like biocontrol agent release suppressing and invasive pest, whith indirect effects are changes to plant growth resulting from succesful biological control.
+Github repository associated with a manuscript on path analysis (structural equation modeling) for using path analyses in integrated pest management or biocontrol research. Target audience for this project are scientists working in applied entomology evaluating field trails, greenhouse experiments, or other surveys. The ideal end-user has already collected data and suspects there are strong direct and indirect effects. Direct effects would be something like biocontrol agent release suppressing and invasive pest, whith indirect effects are changes to plant growth resulting from successful biological control.
 
 # Origin of Project Idea
 
