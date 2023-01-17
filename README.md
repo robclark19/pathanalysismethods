@@ -4,7 +4,7 @@ Github repository associated with a manuscript on path analysis (structural equa
 
 # Origin of Project Idea
 
-The authors on this project have applied path analysis (specfically with the piecewiseSEM package in R) to applied entomology projects in forests, agroecosystems, and even molecular ecology. Much of the underlying methods are replicated across these projects and a general interst by students and professionals alike has remained constant over the past 5-6 years.
+The authors on this project have applied path analysis (specifically with the piecewiseSEM package in R) to applied entomology projects in forests, agroecosystems, and even molecular ecology. Much of the underlying methods are replicated across these projects and a general interest by students and professionals alike has remained constant over the past 5-6 years.
 
 # Examples from published works
 
