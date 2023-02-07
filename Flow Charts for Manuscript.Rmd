@@ -1,0 +1,126 @@
+---
+title: "Flow Charts for Manuscript"
+output: html_document
+date: "2023-02-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(DiagrammeR)
+library(tidyverse)
+```
+
+# Intro to SEM
+
+## Imagine we have four variables and we want to study thier indirect and direct interactions
+
+```{r Basic, echo=FALSE}
+# Four standalone nodes
+
+grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a
+    b
+    c
+    d
+  }
+")
+```
+
+## Linear models (Multiple regression)
+
+```{r GLM, echo=FALSE}
+# Linear models (Multiple regression)
+
+grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a -> d
+    b -> d
+    c -> d
+  }
+")
+```
+
+## Multivariate models (MANOVA)
+
+```{r MANOVA, echo=FALSE}
+# Linear models (Multiple regression)
+
+grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a -> d
+    b -> d
+    c -> d
+  }
+")
+```
+
+# SEMs utility as an extension of GLM and MANOVA
+
+## Indirect effects mean a node can be both a predictor and a response variable. Here A indirectly affects B via D
+
+
+```{r SEM1, echo=FALSE}
+grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a -> c
+    a -> d
+    d -> b
+    {rank=same; a b}
+    a -> b [color=red, penwidth=1, style=solid, arrowhead=normal]
+  }
+")
+```
+
+# Chains of serial direct effects
+## A Both directly and indirectly affects C and D through multiplying path coefficients
+
+
+```{r SEM2, echo=FALSE}
+grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a -> b
+    b -> c
+    c -> d
+    {rank=same; a b c d}
+    a -> c [color=black, penwidth=1, style=dotted, arrowhead=normal]
+    a -> d [color=black, penwidth=1, style=dotted, arrowhead=normal]
+  }
+")
+```
+
+# Limitations of SEM
+## SEM cannot resolve networks with cyclical parts
+
+```{r SEM3, echo=FALSE}
+grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a -> b
+    b -> c
+    c -> a 
+    c -> d
+    {rank=same; b c}
+  }
+")
+```
+
+## Reciprocal or bidirectional paths cause the same issue as cyclical diagrams
+
+```{r SEM4, echo=FALSE}
+ grViz("
+  digraph flowchart {
+    node [shape=circle, fontsize=14, color=lightblue, style=filled]
+    a -> b
+    b -> a
+    a -> c 
+    b -> d
+    {rank=same; a b}
+  }
+") 
+```
