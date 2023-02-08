@@ -78,7 +78,7 @@ summary(mod_1)
 summary(mod_2)
 summary(mod_3)
 
-#try the list appraoch, no change
+#try the list approach, no change
 mulch_sem_2 <- psem(
   glm(root_aphid_colonies ~ medium_sandy + root_dry_weight_g + aerial_aphid_colonies, data=mulch_final),
   glm.nb(root_galls ~ medium_sandy + mulch_slurry + mulch_chips + root_dry_weight_g + aerial_aphid_colonies, data=mulch_final),
