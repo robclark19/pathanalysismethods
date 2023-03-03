@@ -15,7 +15,7 @@ library("nlme")
 library("MASS")
 
 
-#add distance_new from distance_calc object to end of SEM.dat
+#add distance_new from distance_calculation object to end of SEM.dat
 #added PEMV data from PEMV reads
 bug.2 <- read.csv(file = "./Example R Scripts/PEMV/full page thunderdorm data no height.csv",
                   stringsAsFactors = F)
