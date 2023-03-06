@@ -1,1 +1,0 @@
-# simple path diagrams based on wootton
