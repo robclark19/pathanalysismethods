@@ -1,24 +1,29 @@
- 
+# Data and analysis modified from Clark et al. 2016 in Ecology
+# https://doi.org/10.1002/ecy.1571
+
+# Version notes:
+# New analysis run using R version 4.2.2 with libraries accessed on March 6 2023
+
+# Libraries ####
 library(lme4)
 library(piecewiseSEM)
-library(car)
 library(tidyverse)
 library(janitor)
 
+# Data ####
 ants_dat <- read.csv("./Example R Scripts/Ants/RC2012PlantDamage.csv") %>%
-  clean_names() 
+  clean_names() %>%
+  subset(., sampling_period == "S2") %>% # Sampling period two only since leaf damage is across both sampling periods
+  mutate(ant_treatment = ifelse(ant_treatment == "tanglefoot", 1, 0)) # Encode predator manipulation as 0,1
 
-ants_dat <- subset(ants_dat, sampling_period == "S2") %>% #leaf damage is across both sampling periods
-  mutate(ant_treatment = ifelse(ant_treatment == "tanglefoot", 1, 0)) # encode predator manipulation as 0,1
 
+# A priori path model ####
+# Leaf damage is impacted by tanglefoot, caterpillars, and sap-feeding Hemiptera
+# Ant abundance is impacted by sap-feeders, tanglefoot
+# Caterpillar abundance is impacted by ants
+# Sampling location and host plant species are treated as random effects in all models
 
-# description of paths
-# leaf damage is impacted by tanglefoot, caterpillars, sap-feeding Hemiptera
-# carps are impacted by saps, tanglefoot
-# cats are impacted by carps, tanglefoot
-
-# a priori model
-
+# Model list
 mod_1 <- lmer(leaf_area_lost ~ cumulative_cat_count +
                 (1|host_plant) + 
                 (1|site:block), data=ants_dat)
@@ -32,12 +37,46 @@ mod_3 <- glmer.nb(total_ants ~ s1_s2_sap_presence + ant_treatment +
                     (1|site:block),
                     data=ants_dat)
 
+# Create path model object
 ants_sem <- psem(mod_1, mod_2, mod_3)
 
+# Evaluate a prior model
 summary(ants_sem, standardize="none", conserve=TRUE)
 
-# a posteriori model
 
+# Add paths ####
+# Add significant paths reported from tests of directed separation
+# Sap-feeder presence added to model 1
+mod_1 <- lmer(leaf_area_lost ~ cumulative_cat_count + s1_s2_sap_presence +
+                (1|host_plant) + 
+                (1|site:block), data=ants_dat)
+
+# Update path model object
+ants_sem <- psem(mod_1, mod_2, mod_3)
+
+# Evaluate updated model
+summary(ants_sem, standardize="none", conserve=TRUE)
+
+
+
+# Remove paths ####
+mod_1 <- lmer(leaf_area_lost ~ s1_s2_sap_presence +
+                (1|host_plant) + 
+                (1|site:block), data=ants_dat)
+
+
+# Update path model object
+ants_sem <- psem(mod_1, mod_2, mod_3)
+
+# Evaluate updated model
+summary(ants_sem, standardize="none", conserve=TRUE)
+
+# AIC criteria ####
+# Note ant treatment effect on leaf area lost have P = 0.06 in test of directed separation
+# Adding this term fo the path model is advisable, as it increases AIC by at least 2
+
+# Accepted a posteriori model ####
+# Added ant treatment to mod_1 to improve AIC > 2
 mod_1 <- lmer(leaf_area_lost ~ s1_s2_sap_presence + ant_treatment +
                 (1|host_plant) + 
                 (1|site:block), data=ants_dat)
@@ -51,9 +90,7 @@ mod_3 <- glmer.nb(total_ants ~ s1_s2_sap_presence + ant_treatment +
                     (1|site:block),
                   data=ants_dat)
 
-mod_4 <- lmer(s1_s2_sap_presence)
-
 ants_sem <- psem(mod_1, mod_2, mod_3)
 
-summary(ants_sem, standardize="none", conserve=TRUE)
+summary(ants_sem, standardize="none", conserve=TRUE) # Standardizing path coefficients not applied in this example
 
