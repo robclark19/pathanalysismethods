@@ -1,38 +1,34 @@
-
-# Libraries
-
-library("lme4")
-library("car")
-library("multcomp")
-library("ggplot2")
-library("emmeans")
-library("multcompView")
-library("tidyverse")
-library("janitor")
-library("piecewiseSEM")
-library("effects")
-library("nlme")
-library("MASS")
+# Data and analysis modified from Clark et al. 2019 in Ecology.
+# 
 
 
-#add distance_new from distance_calculation object to end of SEM.dat
-#added PEMV data from PEMV reads
-bug.2 <- read.csv(file = "./Example R Scripts/PEMV/full page thunderdorm data no height.csv",
-                  stringsAsFactors = F)
+# Libraries ####
+library(lme4)
+library(tidyverse)
+library(piecewiseSEM)
+library(janitor)
 
-thunder_summary <- bug.2 %>%
+# Data ####
+
+# Full PEMV data from greenhouse experiment
+pemv_dat <- read.csv(file = "full page thunderdorm data no height.csv",
+                     stringsAsFactors = F)
+
+# Create total aphid count values
+pemv_summary <- pemv_dat %>%
   clean_names() %>%
   group_by(dorm, plant_number, column) %>%
   summarize(sum_adults = sum(total_adults))
 
-thunder_source_fix <- thunder_summary %>%
+# Calculate distance by plant rows
+pemv_source <- pemv_summary %>%
   # Create separate cols from 'column'
   spread(key = column, value = sum_adults) %>%
   # Then set B = A when plant_number = S
   mutate(B = if_else(condition = plant_number == "S", true = A, false = B)) %>%
   # Then recombine into single col
   gather(key = column, value = sum_adults, A:B) %>%
-  # Create a plant weight col for doing math
+  # Create a plant distance value
   mutate(
     plant_weight = case_when(
       plant_number != "S" ~ plant_number,
@@ -40,7 +36,8 @@ thunder_source_fix <- thunder_summary %>%
     plant_weight = as.numeric(plant_weight)
   )
 
-distance_calc <- thunder_source_fix %>%
+# Calculate a weighted distance by plant rows
+distance_calc <- pemv_source %>%
   mutate(weighted_row_col = plant_weight * sum_adults) %>%
   group_by(dorm, column) %>%
   summarize(weighted_dorm_col_sum = sum(weighted_row_col),
@@ -48,16 +45,33 @@ distance_calc <- thunder_source_fix %>%
   mutate(distance_w_source = weighted_dorm_col_sum / unweighted_dorm_col_sum,
          distance_w_source = replace_na(data = distance_w_source, replace = 0))
 
+# Import sorted data summarized by insect dorm
+sem_dat <- read.csv("new.SEM.csv")
+
+# Log transform total aphid counts
+sem_dat$log.all.aphids <- log(sem_dat$Total.Aphids+1)
+
+# Log transform nymph aphid counts
+sem_dat$log.nymphs <- log(sem_dat$Total.Nymphs+1)
+
+# Find total adult counts
+sem_dat$adults <- sem_dat$Total.Aphids - sem_dat$Total.Nymphs
+
+# Merge distance calcs with sem_dat
+sem_dat <- inner_join(x=sem_dat, y=dplyr::select(distance_calc, dorm,column,distance_w_source), by=c("Dorm"="dorm","Column"="column"))
 
 
 
-# SEM dat is a lightly edited file from full page thunderdorm data no height (primary file)
+# A priori model #####
 
-SEM.dat <- read.csv("./Example R Scripts/PEMV/new.SEM.csv")
-SEM.dat$log.all.aphids <- log(SEM.dat$Total.Aphids+1)
-SEM.dat$log.nymphs <- log(SEM.dat$Total.Nymphs+1)
-SEM.dat$adults <- SEM.dat$Total.Aphids - SEM.dat$Total.Nymphs
-SEM.dat <- inner_join(x=SEM.dat, y=dplyr::select(distance_calc, dorm,column,distance_w_source), by=c("Dorm"="dorm","Column"="column"))
+
+
+
+
+
+
+
+# A posterori model ####
 
 #SEMs ###########
 # rerun with distance average that now includes source plant totals
@@ -81,4 +95,10 @@ summary(sem.model, standardize="none", conserve=TRUE)
 
 #Table S1 #####
 summary(update(sem.model, log.nymphs %~~% distance_w_source), standardize="scale")
+
+
+
+
+
+
 
