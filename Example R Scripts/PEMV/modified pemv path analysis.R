@@ -63,7 +63,17 @@ sem_dat <- inner_join(x=sem_dat, y=dplyr::select(distance_calc, dorm,column,dist
 
 
 # A priori model #####
+model.a <- lme(distance_w_source ~ vetch.num + ladybird.num + weevil.num, random=~1|Dorm, data=SEM.dat)
+Anova(model.a)
 
+#nymph abundance
+model.b <- lme(log.nymphs ~ ladybird.num + vetch.num, random=~1|Dorm, data=SEM.dat)
+summary(model.b)
+
+
+#pemv infection
+model.c <- glmer(PEMV.num ~ log.nymphs*weevil.num + vetch.num + ladybird.num + (1|Dorm), family=binomial, data=SEM.dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=100000)))
+summary(model.c)
 
 
 
@@ -72,10 +82,6 @@ sem_dat <- inner_join(x=sem_dat, y=dplyr::select(distance_calc, dorm,column,dist
 
 
 # A posterori model ####
-
-#SEMs ###########
-# rerun with distance average that now includes source plant totals
-# distance of adults
 model.a5 <- lme(distance_w_source ~ vetch.num + ladybird.num, random=~1|Dorm, data=SEM.dat)
 Anova(model.a5)
 
