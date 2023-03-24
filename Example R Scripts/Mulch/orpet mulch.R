@@ -1,87 +1,56 @@
+# Data and analysis modified from Orpet et al. 2019
+# https://doi.org/10.1371/journal.pone.0216424
 
-#LOAD PACKAGES
-library("piecewiseSEM")
-library("multcompView")
-library("tidyverse")
-library("janitor")
-library("MASS")
+# Version notes:
+# New analysis run using R version 4.0.0 with libraries accessed on March 17 2023
 
-#LOAD DATA
-Data_mulch <- read.csv("pone.0216424.s003.csv", header = TRUE)
+# Libraries ####
+library(lme4)
+library(piecewiseSEM)
+library(tidyverse)
+library(janitor)
+
+# Data ####
+# load data
+data_aphids <- read.csv("./Example R Scripts/Mulch/pone.0216424.s003.csv")
+# encode dummy variables
+data_aphids$Sandy <- ifelse(data_aphids$Medium == "Sandy",1,0)
+data_aphids$Chips <- ifelse(data_aphids$Mulch == "Chips",1,0)
+data_aphids$Slurry <- ifelse(data_aphids$Mulch == "Slurry",1,0)
+
+# A priori path model ####
+# The goal of the study was to test whether colonies and damage (galls) of woolly apple aphid to apple trees could be reduced based on soil and mulch treatments that restrict above- to below-ground movement of this species The experiment tested effects of two potting media (sandy and plain) and three mulches (none, chips, and slurry) on woolly apple aphid colony and gall formation on roots of potted apple trees. Path analysis was used because of treatments could also have affected covariates (root dry weight, aerial woolly apple aphid colonies) in the analysis, violating an assumption of conventional ANCOVA. As per Orpet et al. 2019, we hypothesized:
+# (H1) sandy media reduces  root colonies and galls
+# (H2) lower root dry weight reduces the number of root woolly apple aphid colonies and galls because of less available space
+# (H3) a greater number of aerial colonies results in more root colonies and galls
+# (H4) chips and slurry would reduce the number of root galls, but not the number of root colonies
+# (H5) root dry weight would be affected by potting media.
 
 #CONSTRUCT MODELS
 #(1) a linear model of root colonies distributed by potting media treatment, root dry weight, and aerial colonies
-model_rootcolonies <- lm(Root.aphid.colonies ~ Medium + Root.dry.weight..g. + Aerial.aphid.colonies, data = Data_mulch)
+model_rootcolonies <- lm(Root.aphid.colonies ~ Medium + Root.dry.weight..g. + Aerial.aphid.colonies, data = data_aphids)
 #(2) a generalized linear model with a Poisson distribution and log link function of root galls distributed by potting media treatment, mulch treatment, root dry weight, and aerial colonies
-model_rootgalls <- glm(Root.galls ~ Medium + Mulch + Root.dry.weight..g. + Aerial.aphid.colonies, family = poisson(link = "log"), data = Data_mulch)
+model_rootgalls <- glm(Root.galls ~ Medium + Mulch + Root.dry.weight..g. + Aerial.aphid.colonies, family = poisson(link = "log"), data = data_aphids)
 #(3) a linear model of root dry weight distributed by potting media treatment.
-model_rootweight <- lm(Root.dry.weight..g. ~ Medium, data = Data_mulch)
+model_rootweight <- lm(Root.dry.weight..g. ~ Medium, data = data_aphids)
 
-#STRUCTURAL EQUATION MODEL
-SEM_mulch <- psem(model_rootcolonies,model_rootgalls,model_rootweight)
-summary(SEM_mulch)
+# Create path model object
+sem_aphids <- psem(model_rootcolonies, model_rootgalls, model_rootweight)
 
-summary(model_rootcolonies)
-
-summary(model_rootweight)
+# Evaluate a priori model
+summary(sem_aphids, standardize="none", conserve=TRUE)
 
 
+# Model list
+# model 1 addresses effects on woolly apple aphid root colonies (H1, H2, H3)
+m1 <- lm(Root.aphid.colonies ~ Sandy + Chips + Slurry + Root.dry.weight..g. + Aerial.aphid.colonies, data = data_aphids) 
+# model 2 addresses effects on woolly apple aphid root galls (H1, H2, H3, H4)
+m2 <- glm(Root.galls ~ Sandy + Chips + Slurry + Root.dry.weight..g. + Aerial.aphid.colonies, family = poisson(link = "log"), data = data_aphids)
+#model 3 addresses effects on apple tree root dry weight (H5)
+m3 <- lm(Root.dry.weight..g. ~ Sandy, data = data_aphids)
 
-# New models created by R Clark in 2023
+# Create path model object
+sem_aphids <- psem(m1, m2, m3)
 
-mulch_dat <- read.csv("./Example R Scripts/pone.0216424.s003.csv", header = TRUE) %>%
-  clean_names()
-
-# Make predictor variables 0/1 for models
-
-# One-hot-encode the column "medium"
-mulch_ <- as.data.frame(model.matrix(~ medium - 1, data = mulch_dat))
-
-# Make column names to select later on
-colnames(df_encoded) <- c("medium_Plain", "medium_Sandy")
-
-# Select and rename the column
-df_encoded_short <- df_encoded %>% select(medium_Sandy) %>% rename(medium_sandy = medium_Sandy)
-
-# Merge just the medium
-mulch_merged <- cbind(mulch_dat, df_encoded_short)
-
-# One-hot-encode the column "mulch" and repeat
-df_encoded <- as.data.frame(model.matrix(~ mulch - 1, data = mulch_dat))
-colnames(df_encoded) <- c("mulch_chips", "mulch_control", "mulch_slurry")
-mulch_final <- cbind(mulch_merged, df_encoded)
-
-
-
-# model 1
-mod_1 <- glm(root_aphid_colonies ~ medium_sandy + root_dry_weight_g + aerial_aphid_colonies, data= mulch_final)
-
-# model 2
-# Poisson not used due to error in fit, using nb
-# mulch slurry has singularity so dropped from SEM, it had no effects on the other variables
-
-mod_2 <- glm.nb(root_galls ~ medium_sandy + mulch_slurry + mulch_chips + root_dry_weight_g + aerial_aphid_colonies, data=mulch_final)
-
-# non-normal distribution suggests nb fit using MASS package
-hist(mulch_final$root_galls)
-
-# model 3
-mod_3 <- glm(root_dry_weight_g ~ medium_sandy, data= mulch_final)
-
-
-# path analysis
-
-mulch_sem <- psem(mod_1, mod_2, mod_3)
-summary(mulch_sem, standardize="none", conserve=TRUE)
-
-summary(mod_1)
-summary(mod_2)
-summary(mod_3)
-
-#try the list approach, no change
-mulch_sem_2 <- psem(
-  glm(root_aphid_colonies ~ medium_sandy + root_dry_weight_g + aerial_aphid_colonies, data=mulch_final),
-  glm.nb(root_galls ~ medium_sandy + mulch_slurry + mulch_chips + root_dry_weight_g + aerial_aphid_colonies, data=mulch_final),
-  glm(root_dry_weight_g ~ medium_sandy, data=mulch_final))
-
-summary(mulch_sem_2, standardize="none", conserve=TRUE)
+# Evaluate a priori model
+summary(sem_aphids, standardize="none", conserve=TRUE)
